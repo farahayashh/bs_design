@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "short_name": "myapp",
+    "name": "bs_arch",
+    "short_name": "bs_arch",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

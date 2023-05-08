@@ -30,6 +30,11 @@ dependencies:
   intl: ^0.17.0
   flutter:
     sdk: flutter
+  flutter_swiper: ^1.1.6
+  mailer: ^5.0.0
+  email_launcher: ^1.0.0
+  flutter_email_sender: ^5.0.1
+  carousel_slider: ^4.0.0
   flutter_launcher_icons: ^0.9.0
   http: ^0.13.4
   get: ^4.6.1
@@ -56,7 +61,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   simple_gradient_text: ^1.2.2
-  hover: ^0.0.1
 flutter_icons:
   android: true
   ios: true
@@ -86,7 +90,16 @@ flutter:
   # To add images to your application, add an images section, like this:
   assets:
     - assets/images/
-    - assets/gif/
+    - assets/images/homePage/
+    - assets/images/contact/
+    - assets/images/services/
+    - assets/images/projects/
+    - assets/images/see_more/
+    - assets/images/blog/
+    - assets/icons/
+    - assets/icons/homePage/
+    - assets/icons/contact/
+
 
 
 
@@ -102,9 +115,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: DancingScript
+    - family: Segoe UI
       fonts:
-        - asset: fonts/static/DancingScript-Regular.ttf
+        - asset: fonts/Segoe UI.ttf
+
+    - family: TwCenMTStd
+      fonts:
+        - asset: fonts/TwCenMTStd.otf
+
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

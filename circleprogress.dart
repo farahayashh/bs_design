@@ -2,7 +2,6 @@ import 'dart:math';
 
 
 import 'package:flutter/material.dart';
-import 'package:letsworkout/home/circleprogress.dart';
 class CircleProgress extends CustomPainter
 {
   @override
