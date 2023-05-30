@@ -249,7 +249,7 @@ class _FooterState extends State<Footer> {
                             child: const Image(image: AssetImage("assets/icons/homePage/instagram.jpg"),),
                           ),
                           onTap: () {
-                            const url = 'https://instagram.com/b.sdeaign_architecture?igshid=YmMyMTA2M2Y=';
+                            const url = 'https://instagram.com/b.sdesign_architecture?igshid=NTc4MTIwNjQ2YQ==';
                             html.window.open(url, '_blank');
                           },
                         ),

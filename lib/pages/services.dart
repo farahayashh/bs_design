@@ -20,21 +20,24 @@ class _ServicesState extends State<Services> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => {
-                Navigator.pushNamed(context,'/home')
-              },
-              child: Image.asset(
-                'assets/images/homePage/logo.jpg',
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.05,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.pushNamed(context,'/home')
+                    },
+                    child: Image.asset(
+                      'assets/images/homePage/logo.jpg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.30),
               Flexible(
                 flex: 1,
@@ -118,63 +121,65 @@ class _ServicesState extends State<Services> {
                 ),
               ),
               Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                        fontFamily: "Segoe UI"
+                child: SizedBox(height: MediaQuery.of(context).size.width * 0.025 ,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'SEARCH',
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                          fontFamily: "Segoe UI"
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                      ),
+                      alignLabelWithHint: true,
+                      prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                    ),
-                    alignLabelWithHint: true,
-                    prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
+                    cursorColor: const Color(0xEAAF8632),
+                    onSubmitted: (value) {
+                      if (Blog.containsWord(value)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Blog(),
+                          ),
+                        );
+                      } else if (Projects.containsWord(value)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Projects(),
+                          ),
+                        );
+                      } else {
+                        // Show a dialog to inform the user that the word was not found
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Word not found'),
+                              content: Text('The word "$value" was not found.'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK', style: TextStyle(color: Colors.black),),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
-                  cursorColor: const Color(0xEAAF8632),
-                  onSubmitted: (value) {
-                    if (Blog.containsWord(value)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Blog(),
-                        ),
-                      );
-                    } else if (Projects.containsWord(value)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Projects(),
-                        ),
-                      );
-                    } else {
-                      // Show a dialog to inform the user that the word was not found
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Word not found'),
-                            content: Text('The word "$value" was not found.'),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK', style: TextStyle(color: Colors.black),),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
                 ),
               ),
             ],),
@@ -242,7 +247,7 @@ class _ServicesState extends State<Services> {
                             children: [
                               SizedBox(height:MediaQuery.of(context).size.height /9),
                               SizedBox(width:MediaQuery.of(context).size.width / 4.9 , height: MediaQuery.of(context).size.height /2,
-                                  child: const Image(image: AssetImage("assets/images/services/s1.jpg"))),
+                                  child: const Image(image: AssetImage("assets/images/services/arch.jpg"))),
                             ],
                           )
                         ],
@@ -302,7 +307,7 @@ class _ServicesState extends State<Services> {
                             children: [
                               SizedBox(height:MediaQuery.of(context).size.height /9),
                               SizedBox(width:MediaQuery.of(context).size.width / 4.9 , height: MediaQuery.of(context).size.height /2,
-                                  child: const Image(image: AssetImage("assets/images/services/s2.jpg"))),
+                                  child: const Image(image: AssetImage("assets/images/services/ff2.jpg"))),
                             ],
                           )
                         ],
@@ -361,8 +366,8 @@ class _ServicesState extends State<Services> {
                           Column(
                             children: [
                               SizedBox(height:MediaQuery.of(context).size.height /9),
-                              SizedBox(width:MediaQuery.of(context).size.width / 4.9 , height: MediaQuery.of(context).size.height /2,
-                                  child: const Image(image: AssetImage("assets/images/services/s3.jpg"))),
+                              SizedBox(width:MediaQuery.of(context).size.width / 4.6 , height: MediaQuery.of(context).size.height /2.2,
+                                  child: const Image(image: AssetImage("assets/images/services/design.jpg",), fit: BoxFit.fill)),
                             ],
                           )
                         ],
@@ -421,8 +426,8 @@ class _ServicesState extends State<Services> {
                           Column(
                             children: [
                               SizedBox(height:MediaQuery.of(context).size.height /9),
-                              SizedBox(width:MediaQuery.of(context).size.width / 4.9 , height: MediaQuery.of(context).size.height /2,
-                                  child: const Image(image: AssetImage("assets/images/services/s4.jpg"))),
+                              SizedBox(width:MediaQuery.of(context).size.width /4.6 , height: MediaQuery.of(context).size.height /2.2,
+                                  child: const Image(image: AssetImage("assets/images/services/fitout.jpg"), fit: BoxFit.fill)),
                             ],
                           )
                         ],
