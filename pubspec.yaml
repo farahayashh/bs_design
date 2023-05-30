@@ -102,7 +102,6 @@ flutter:
 
 
 
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
@@ -117,11 +116,11 @@ flutter:
   fonts:
     - family: Segoe UI
       fonts:
-        - asset: fonts/Segoe UI.ttf
+        - asset: assets/fonts/Segoe UI.ttf
 
     - family: TwCenMTStd
       fonts:
-        - asset: fonts/TwCenMTStd.otf
+        - asset: assets/fonts/TwCenMTStd.otf
 
 
   # For details regarding fonts from package dependencies,
