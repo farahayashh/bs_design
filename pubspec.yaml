@@ -96,8 +96,9 @@ flutter:
     - assets/icons/
     - assets/icons/homePage/
     - assets/icons/contact/
-    - assets/fonts/
+    - assets/AssetManifest.json
     - build/web/assets/FontManifest.json
+    - fonts/
 
 
 
