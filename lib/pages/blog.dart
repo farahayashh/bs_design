@@ -32,21 +32,24 @@ class _BlogState extends State<Blog> {
       backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => {
-                Navigator.pushNamed(context,'/home')
-              },
-              child: Image.asset(
-                'assets/images/homePage/logo.jpg',
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.05,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.pushNamed(context,'/home')
+                    },
+                    child: Image.asset(
+                      'assets/images/homePage/logo.jpg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.30),
               Flexible(
                 flex: 1,
@@ -130,63 +133,65 @@ class _BlogState extends State<Blog> {
                 ),
               ),
               Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                        fontFamily: "Segoe UI"
+                child: SizedBox(height: MediaQuery.of(context).size.width * 0.025 ,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'SEARCH',
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: MediaQuery.of(context).size.height * 0.025,
+                          fontFamily: "Segoe UI"
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                      ),
+                      alignLabelWithHint: true,
+                      prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                    ),
-                    alignLabelWithHint: true,
-                    prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
+                    cursorColor: const Color(0xEAAF8632),
+                    onSubmitted: (value) {
+                      if (Blog.containsWord(value)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Blog(),
+                          ),
+                        );
+                      } else if (Projects.containsWord(value)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Projects(),
+                          ),
+                        );
+                      } else {
+                        // Show a dialog to inform the user that the word was not found
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Word not found'),
+                              content: Text('The word "$value" was not found.'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK', style: TextStyle(color: Colors.black),),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
-                  cursorColor: const Color(0xEAAF8632),
-                  onSubmitted: (value) {
-                    if (Blog.containsWord(value)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Blog(),
-                        ),
-                      );
-                    } else if (Projects.containsWord(value)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Projects(),
-                        ),
-                      );
-                    } else {
-                      // Show a dialog to inform the user that the word was not found
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Word not found'),
-                            content: Text('The word "$value" was not found.'),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK', style: TextStyle(color: Colors.black),),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
                 ),
               ),
             ],),
@@ -212,6 +217,7 @@ class _BlogState extends State<Blog> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(height:MediaQuery.of(context).size.height / 10),
                             Text("High-end finishing in interior design                                                       ",
                               textAlign: TextAlign.left, style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, fontWeight: FontWeight.bold, fontFamily: "TwCenMTStd"),),
                             SizedBox(height: MediaQuery.of(context).size.height/40,),
@@ -250,6 +256,7 @@ class _BlogState extends State<Blog> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(height:MediaQuery.of(context).size.height / 10),
                             Text("Symmetry in Classic Architecture: A Study in Balance and Harmony         ",
                               textAlign: TextAlign.left, style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, fontWeight: FontWeight.bold, fontFamily: "TwCenMTStd"),),
                             SizedBox(height: MediaQuery.of(context).size.height/25,),
@@ -304,6 +311,7 @@ class _BlogState extends State<Blog> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(height:MediaQuery.of(context).size.height / 10),
                             Text(" In the lap of luxury – How sanitary ware is evolving?                              ",
                               textAlign: TextAlign.left, style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, fontWeight: FontWeight.bold, fontFamily: "TwCenMTStd"),),
                             SizedBox(height: MediaQuery.of(context).size.height/25,),
@@ -351,6 +359,7 @@ class _BlogState extends State<Blog> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(height:MediaQuery.of(context).size.height / 10),
                             Text("The building of the future                                                                     ",
                               textAlign: TextAlign.left, style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, fontWeight: FontWeight.bold, fontFamily: "TwCenMTStd"),),
                         SizedBox(height: MediaQuery.of(context).size.height/40,),
@@ -402,6 +411,7 @@ class _BlogState extends State<Blog> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(height:MediaQuery.of(context).size.height / 10),
                             Text("Japandi Style: The Perfect Blend of Japanese and Scandinavian Design   ",
                               textAlign: TextAlign.left, style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, fontWeight: FontWeight.bold, fontFamily: "TwCenMTStd"),),
                             SizedBox(height: MediaQuery.of(context).size.height/40,),

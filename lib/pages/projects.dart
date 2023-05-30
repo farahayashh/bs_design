@@ -39,21 +39,24 @@ class _ProjectsState extends State<Projects> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => {
-              Navigator.pushNamed(context,'/home')
-            },
-            child: Image.asset(
-              'assets/images/homePage/logo.jpg',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.05,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.pushNamed(context,'/home')
+                  },
+                  child: Image.asset(
+                    'assets/images/homePage/logo.jpg',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
             SizedBox(width: MediaQuery.of(context).size.width * 0.30),
             Flexible(
               flex: 1,
@@ -137,63 +140,65 @@ class _ProjectsState extends State<Projects> {
               ),
             ),
             Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: MediaQuery.of(context).size.height * 0.025,
-                      fontFamily: "Segoe UI"
+              child: SizedBox(height: MediaQuery.of(context).size.width * 0.025 ,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'SEARCH',
+                    hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: MediaQuery.of(context).size.height * 0.025,
+                        fontFamily: "Segoe UI"
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
+                    ),
+                    alignLabelWithHint: true,
+                    prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height * 0.002),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(color: const Color(0xEAAF8632), width: MediaQuery.of(context).size.height * 0.005),
-                  ),
-                  alignLabelWithHint: true,
-                  prefixIcon: Icon(Icons.search, color: Colors.black87,size: MediaQuery.of(context).size.height * 0.04,),
+                  cursorColor: const Color(0xEAAF8632),
+                  onSubmitted: (value) {
+                    if (Blog.containsWord(value)) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Blog(),
+                        ),
+                      );
+                    } else if (Projects.containsWord(value)) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Projects(),
+                        ),
+                      );
+                    } else {
+                      // Show a dialog to inform the user that the word was not found
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Word not found'),
+                            content: Text('The word "$value" was not found.'),
+                            actions: [
+                              TextButton(
+                                child: const Text('OK', style: TextStyle(color: Colors.black),),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
                 ),
-                cursorColor: const Color(0xEAAF8632),
-                onSubmitted: (value) {
-                  if (Blog.containsWord(value)) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Blog(),
-                      ),
-                    );
-                  } else if (Projects.containsWord(value)) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Projects(),
-                      ),
-                    );
-                  } else {
-                    // Show a dialog to inform the user that the word was not found
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Word not found'),
-                          content: Text('The word "$value" was not found.'),
-                          actions: [
-                            TextButton(
-                              child: const Text('OK', style: TextStyle(color: Colors.black),),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
               ),
             ),
           ],),
@@ -280,6 +285,144 @@ class _ProjectsState extends State<Projects> {
                     ),
                   ),
                 ],),
+              ),
+              SizedBox( height: MediaQuery.of(context).size.height / 15,),
+              SizedBox(
+                width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 1.7,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width:  MediaQuery.of(context).size.width * 0.33333333,
+                      child: Stack(
+                          children:[
+                            Container(width:  MediaQuery.of(context).size.width * 0.33333333,
+                              padding: EdgeInsets.only(left:  MediaQuery.of(context).size.width / 70, right:  MediaQuery.of(context).size.width / 50),
+                              decoration: const BoxDecoration(color: Color(0xB7CBC3BD)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top:  MediaQuery.of(context).size.height / 20),
+                                      child: Text("PALM JUMAIRAH APARTMENT #2" ,
+                                        style: TextStyle(fontSize:MediaQuery.of(context).size.width * 0.02, color: const Color(0xEAAF8632), fontFamily: "TwCenMTStd"),),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height / 30,),
+                                    Text("High levels of detail were required in this\n"
+                                        "project with emphasis on execution and\n"
+                                        "finish resulting in a sense of opulence and\n"
+                                        "luxury.\n"
+                                        "B.S DESIGN AND ARCHITECTURE boasts\n"
+                                        "striking materials providing the finest\n"
+                                        "quality in finishes and fittings also\n"
+                                        "incorporated into the interior design.",
+                                        style: TextStyle(fontSize:  MediaQuery.of(context).size.height * 0.03, fontFamily: "TwCenMTStd", height: 1.1) ),
+                                  ]
+                              ),
+                            ),
+                            Positioned(
+                              bottom: MediaQuery.of(context).size.height / 20, right: 0,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 15, width: MediaQuery.of(context).size.width *0.25,
+                                decoration: const BoxDecoration(color: Colors.white),
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () => {
+                                      Navigator.pushNamed(context,'/see_more',
+                                          arguments: Project(title: "PALM JUMAIRAH APARTMENT #2" ,
+                                              text:
+                                              "High levels of detail were required in this project with emphasis on execution and finish resulting in a sense of opulence and luxury.\n"
+                                                  "B.S DESIGN AND ARCHITECTURE boasts striking materials providing the finest quality in finishes and fittings also\n"
+                                                  "incorporated into the interior design." ,
+                                              img1: "assets/images/see_more/a11.jpg",img2: "assets/images/see_more/a22.jpg",
+                                              img3: "assets/images/see_more/a33.jpg",img4: "assets/images/see_more/a44.jpg"
+                                          ))
+                                    },
+                                    child: Center(
+                                      child: Text("SEE MORE", textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, color: Colors.grey, fontFamily: "Segoe UI"),),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 1.7, width: MediaQuery.of(context).size.width * 0.66666666,
+                      child: const Image(image: AssetImage("assets/images/projects/p6.jpg"),fit: BoxFit.fill),
+                    ),
+                  ],),
+              ),
+              SizedBox( height: MediaQuery.of(context).size.height / 15,),
+              SizedBox(
+                width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 1.7,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 1.7, width: MediaQuery.of(context).size.width * 0.66666666,
+                      child: const Image(image: AssetImage("assets/images/projects/p5.jpg", ),fit: BoxFit.fill),
+                    ),
+                    SizedBox(width:  MediaQuery.of(context).size.width * 0.33333333,
+                      child: Stack(
+                          children:[
+                            Container(width:  MediaQuery.of(context).size.width * 0.33333333,
+                              padding: EdgeInsets.only(left:  MediaQuery.of(context).size.width / 70, right:  MediaQuery.of(context).size.width / 50),
+                              decoration: const BoxDecoration(color: Color(0xB7CBC3BD)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children:  [
+                                    Padding(
+                                      padding: EdgeInsets.only(top:  MediaQuery.of(context).size.height / 20),
+                                      child: Text("DAMAC TOWERS - HOTEL" ,
+                                        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.02, color: const Color(0xEAAF8632), fontFamily: "TwCenMTStd"),),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height / 30,),
+                                    Text("B.S DESIGN AND ARCHITECTURE has set\n"
+                                        "new interior design benchmark standards\n"
+                                        "with the detailed work completed for the\n"
+                                        "Damac Towers.\n"
+                                        "Careful attention and consideration to all\n"
+                                        "aspects of the interior detail was required in\n"
+                                        "an effort to reflect the luxury life on the city\n"
+                                        "of Dubai.",
+                                        style: TextStyle(fontSize:  MediaQuery.of(context).size.height * 0.03, fontFamily: "TwCenMTStd", height: 1.2) ),
+                                  ]
+                              ),
+                            ),
+                            Positioned(
+                              bottom: MediaQuery.of(context).size.height / 20, right: 0,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 15, width: MediaQuery.of(context).size.width *0.25,
+                                decoration: const BoxDecoration(color: Colors.white),
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () => {
+                                      Navigator.pushNamed(context,'/see_more',
+                                          arguments: Project(title: "DAMAC TOWERS - HOTEL" ,
+                                              text:
+                                              "B.S DESIGN AND ARCHITECTURE has set new interior design benchmark standards with the detailed work completed for the Damac Towers.\n"
+                                                  "Careful attention and consideration to all aspects of the interior detail was required in an effort to reflect\n"
+                                                  "the luxury life on the city of Dubai.",
+                                              img1: "assets/images/see_more/d1.jpg",img2: "assets/images/see_more/d2.jpg",
+                                              img3: "assets/images/see_more/d3.jpg",img4: "assets/images/see_more/d4.jpg"
+                                          ))
+                                    },
+                                    child: Center(
+                                      child: Text("SEE MORE", textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, color: Colors.grey, fontFamily: "Segoe UI"),),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                  ],),
               ),
               SizedBox( height: MediaQuery.of(context).size.height / 15,),
               SizedBox(
@@ -479,144 +622,6 @@ class _ProjectsState extends State<Projects> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 1.7, width: MediaQuery.of(context).size.width * 0.66666666,
                       child: const Image(image: AssetImage("assets/images/projects/p4.jpg"),fit: BoxFit.fill),
-                    ),
-                  ],),
-              ),
-              SizedBox( height: MediaQuery.of(context).size.height / 15,),
-              SizedBox(
-                width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 1.7,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.7, width: MediaQuery.of(context).size.width * 0.66666666,
-                      child: const Image(image: AssetImage("assets/images/projects/p5.jpg", ),fit: BoxFit.fill),
-                    ),
-                    SizedBox(width:  MediaQuery.of(context).size.width * 0.33333333,
-                      child: Stack(
-                          children:[
-                            Container(width:  MediaQuery.of(context).size.width * 0.33333333,
-                              padding: EdgeInsets.only(left:  MediaQuery.of(context).size.width / 70, right:  MediaQuery.of(context).size.width / 50),
-                              decoration: const BoxDecoration(color: Color(0xB7CBC3BD)),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:  [
-                                    Padding(
-                                      padding: EdgeInsets.only(top:  MediaQuery.of(context).size.height / 20),
-                                      child: Text("DAMAC TOWERS - HOTEL" ,
-                                        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.02, color: const Color(0xEAAF8632), fontFamily: "TwCenMTStd"),),
-                                    ),
-                                    SizedBox(height: MediaQuery.of(context).size.height / 30,),
-                                    Text("B.S DESIGN AND ARCHITECTURE has set\n"
-                                        "new interior design benchmark standards\n"
-                                        "with the detailed work completed for the\n"
-                                        "Damac Towers.\n"
-                                        "Careful attention and consideration to all\n"
-                                        "aspects of the interior detail was required in\n"
-                                        "an effort to reflect the luxury life on the city\n"
-                                        "of Dubai.",
-                                        style: TextStyle(fontSize:  MediaQuery.of(context).size.height * 0.03, fontFamily: "TwCenMTStd", height: 1.2) ),
-                                  ]
-                              ),
-                            ),
-                            Positioned(
-                              bottom: MediaQuery.of(context).size.height / 20, right: 0,
-                              child: Container(
-                                height: MediaQuery.of(context).size.height / 15, width: MediaQuery.of(context).size.width *0.25,
-                                decoration: const BoxDecoration(color: Colors.white),
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () => {
-                                      Navigator.pushNamed(context,'/see_more',
-                                          arguments: Project(title: "DAMAC TOWERS - HOTEL" ,
-                                              text:
-                                              "B.S DESIGN AND ARCHITECTURE has set new interior design benchmark standards with the detailed work completed for the Damac Towers.\n"
-                                              "Careful attention and consideration to all aspects of the interior detail was required in an effort to reflect\n"
-                                              "the luxury life on the city of Dubai.",
-                                              img1: "assets/images/see_more/d1.jpg",img2: "assets/images/see_more/d2.jpg",
-                                              img3: "assets/images/see_more/d3.jpg",img4: "assets/images/see_more/d4.jpg"
-                                          ))
-                                    },
-                                    child: Center(
-                                      child: Text("SEE MORE", textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, color: Colors.grey, fontFamily: "Segoe UI"),),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]
-                      ),
-                    ),
-                  ],),
-              ),
-              SizedBox( height: MediaQuery.of(context).size.height / 15,),
-              SizedBox(
-                width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 1.7,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(width:  MediaQuery.of(context).size.width * 0.33333333,
-                      child: Stack(
-                          children:[
-                            Container(width:  MediaQuery.of(context).size.width * 0.33333333,
-                              padding: EdgeInsets.only(left:  MediaQuery.of(context).size.width / 70, right:  MediaQuery.of(context).size.width / 50),
-                              decoration: const BoxDecoration(color: Color(0xB7CBC3BD)),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top:  MediaQuery.of(context).size.height / 20),
-                                      child: Text("PALM JUMAIRAH APARTMENT #2" ,
-                                        style: TextStyle(fontSize:MediaQuery.of(context).size.width * 0.02, color: const Color(0xEAAF8632), fontFamily: "TwCenMTStd"),),
-                                    ),
-                                    SizedBox(height: MediaQuery.of(context).size.height / 30,),
-                                    Text("High levels of detail were required in this\n"
-                                        "project with emphasis on execution and\n"
-                                        "finish resulting in a sense of opulence and\n"
-                                        "luxury.\n"
-                                        "B.S DESIGN AND ARCHITECTURE boasts\n"
-                                        "striking materials providing the finest\n"
-                                        "quality in finishes and fittings also\n"
-                                        "incorporated into the interior design.",
-                                        style: TextStyle(fontSize:  MediaQuery.of(context).size.height * 0.03, fontFamily: "TwCenMTStd", height: 1.1) ),
-                                  ]
-                              ),
-                            ),
-                            Positioned(
-                              bottom: MediaQuery.of(context).size.height / 20, right: 0,
-                              child: Container(
-                                height: MediaQuery.of(context).size.height / 15, width: MediaQuery.of(context).size.width *0.25,
-                                decoration: const BoxDecoration(color: Colors.white),
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: () => {
-                                      Navigator.pushNamed(context,'/see_more',
-                                          arguments: Project(title: "PALM JUMAIRAH APARTMENT #2" ,
-                                              text:
-                                                  "High levels of detail were required in this project with emphasis on execution and finish resulting in a sense of opulence and luxury.\n"
-                                                  "B.S DESIGN AND ARCHITECTURE boasts striking materials providing the finest quality in finishes and fittings also\n"
-                                                  "incorporated into the interior design." ,
-                                              img1: "assets/images/see_more/a11.jpg",img2: "assets/images/see_more/a22.jpg",
-                                              img3: "assets/images/see_more/a33.jpg",img4: "assets/images/see_more/a44.jpg"
-                                          ))
-                                    },
-                                    child: Center(
-                                      child: Text("SEE MORE", textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.035, color: Colors.grey, fontFamily: "Segoe UI"),),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.7, width: MediaQuery.of(context).size.width * 0.66666666,
-                      child: const Image(image: AssetImage("assets/images/projects/p6.jpg"),fit: BoxFit.fill),
                     ),
                   ],),
               ),
