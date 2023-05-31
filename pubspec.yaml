@@ -99,7 +99,7 @@ flutter:
     - assets/AssetManifest.json
     - assets/FontManifest.json
     - assets/assets/FontManifest.json
-    - build/web/assets/FontManifest.json
+    #- build/web/assets/FontManifest.json
 
 
 
